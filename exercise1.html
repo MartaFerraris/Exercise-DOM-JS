@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Cat's facts</h3>
+    <button id="btn">Miao</button>
+</body>
+<script>
+    const button = document.getElementById("btn");
+    
+    async function getFact() {
+        const resp = await fetch('https://cat-fact.herokuapp.com/facts/random');
+        const data = await resp.json();
+        return data;
+    }
+    getFact()
+
+    async function setContainer() {
+        const res = await getFact()
+        console.log(res.text);
+        const container = document.createElement('container');
+        container.innerHTML = `
+        <h3>Cats: </h3>
+        <div>
+            <p>${res.text}</p>
+        </div>`
+    }
+
+    button.addEventListener('click', setContainer);
+
+</script>
+
+</html>

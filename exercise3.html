@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=S, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="pokemon" />
+    <button>Search</button>
+    <div class="container"></div>
+</body>
+<script>
+    const input = document.querySelector('#pokemon');
+    const button = document.querySelector('button');
+    const container = document.querySelector('.container');
+
+    button.addEventListener('click', () => {
+        async function getPokemon() {
+            try {
+                const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${input.value}`);
+                const data = await resp.json();
+                console.log(data);
+                const abilities = data.abilities.map((ability) => ability.ability.name).join(', ');
+                const indices = data.game_indices.map((index) => index.version.name).join(', \n');
+                /* \n viene utilizzato per mandare a capo le varie stringhe. È necessario usare il tag <pre> per formattarlo. */
+                const moves = data.moves.map((move) => move.move.name).join(', ');
+                const types = data.types.map((type) => type.type.name).join(', ');
+                container.innerHTML = `
+                <h3>${data.name}</h3>
+                <p><b>Type:</b> ${types}</p>
+                <p><b>Abilities:</b> ${abilities}</p>
+                <pre><b>Indices:</b> ${indices}</pre>
+                <p><b>Moves:</b> ${moves}</p>`
+            } catch (error) {
+                console.log('Pokemon not found');
+            }
+        }
+        getPokemon()
+    })
+</script>
+</html>

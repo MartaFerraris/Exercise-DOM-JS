@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="pokemon" />
+    <button>button</button>
+    <div class="result"></div>
+</body>
+<script>
+    const input = document.querySelector('#pokemon');
+    const button = document.querySelector('button');
+    const result = document.querySelector('.result');
+
+    button.addEventListener('click', () => {
+        async function getPokemon() {
+            try {
+                const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${input.value}`)
+                const data = await resp.json()
+                console.log(data);
+                const moves = data.abilities.map((move) => move.ability.name).join(', ');
+                console.log(moves);
+                result.innerHTML = `
+            <h3>${data.forms[0].name}</h3>
+            <p>${moves}</p>
+            <p>${data.types[0].type.name}</p>
+            `
+                /* <p> ${ data.abilities[0].ability.name }</p> */
+            } catch (error) {
+                console.log('Pokemon not found');
+            }
+        }
+        getPokemon()
+    })
+</script>
+
+</html>

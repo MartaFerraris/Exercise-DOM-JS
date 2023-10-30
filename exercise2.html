@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: orange;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5em;
+            padding: 5em;
+            background-color: yellowgreen;
+            border: 2px solid green;
+        }
+
+        input {
+            background-color: white;
+            border: 1px solid grey;
+            margin: 1em;
+        }
+
+        label {
+            background-color: yellowgreen;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 0.5em 2em;
+            color: white;
+            border-radius: 50px;
+            border: 1px solid grey;
+            background-color: darkgreen;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <label for="user-email">Username/E-mail</label>
+        <input type="text" id="user-email" />
+        <label for="password">Password</label>
+        <input type="text" id="password" />
+        <button>Submit</button>
+    </form>
+</body>
+<script>
+    const userEmail = document.querySelector('#user-email')
+    const password = document.querySelector('#password')
+    const form = document.querySelector('form')
+    const submit = document.querySelector('button')
+    submit.addEventListener('click', (event) => {
+        event.preventDefault(),
+        async function getUser() {
+            let userParam
+            if (userEmail.value.includes('@')) {
+                userParam = 'email'
+            } else {
+                userParam = 'username'
+            }
+
+            const resp = await fetch('https://jsonplaceholder.typicode.com/users/?' + userParam + '=' + userEmail.value)
+            const users = await resp.json()
+
+            if (user) {
+                form.remove()
+                const h1 = document.createElement('h1')
+                h1.textContent = `Welcome ${user.name}!`
+                const body = document.body
+                body.appendChild(h1)
+                /* form.innerHTML = `
+                <h1>Welcome ${user.name}</h1>
+                <p>You're logged</p>` */
+            } else {
+                const p = document.createElement('p')
+                p.textContent = 'Error, user not found'
+                form.appendChild(p)
+                /* form.innerHTML = `<h1>Error! User not found.` */
+            }
+        }
+        getUser()
+    })    
+</script>
+
+</html>

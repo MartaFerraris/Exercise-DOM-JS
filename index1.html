@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" class="search" />
+        <button class="search-button">Search</button>
+    </div>
+    <div class="result"></div>
+    <script>
+        /* RICHIAMARE I DATI NECESSARI NELL'HTML */
+        const container = document.querySelector(".container");
+        const input = document.querySelector(".search");
+        const btn = document.querySelector(".search-button");
+        const result = document.querySelector(".result");
+
+        /* INIZIALIZZARE L'EVENTO('CLICK') */
+        btn.addEventListener("click", () => {
+
+            /* INIZIALIZZARE IL FETCH */
+            async function pokemon() {
+                try {
+                    /* RICHIAMARE L'API */
+                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${input.value}`);
+                    const data = await response.json();
+
+                    /* CICLARE PIU' OGGETTI */
+                    const abilities = data.abilities
+                        .map((pokemon) => pokemon.ability.name)
+                        .join(", ");
+
+                    /* MANDARE I DATI NECESSARI NELL'HTML */
+                    result.innerHTML =
+                        `<h3>Name: ${data.forms[0].name}</h3>
+            <p>Moves: ${abilities}</p>
+            <p>Type: ${data.types[0].type.name}</p>`;
+                    console.log(data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        })
+        pokemon();
+    </script>
+</body>
+
+</html>
