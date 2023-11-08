@@ -1,0 +1,3 @@
+Crea una classe con un metodo per il calcolo dell'area del quadrato, in seguito crea una funzione asincrona che fa un fetch a questo indirizzo: https://my-json-server.typicode.com/ndrx02/fakeRestAPI/figure e farà una nuova istanza della classe a cui passeremo i dati che abbiamo raccolto.
+Fatto questo, sempre nella funzione, creare dinamicamente dei div (sempre sulla base della quantità di risultati ottenuta) che al loro interno avranno il risultato del metodo per il calcolo dell'area a cui aggiungiamo un attributo style, che si occuperà di dare l'altezza e la larghezza del quadrato in modo dinamico, sulla base dei dati ricevuti.
+Infine, aggiungere un listener di eventi associato ad un bottone, che quando cliccato richiama la nostra funzione.
